@@ -1,0 +1,15 @@
+C:\Users\franv\tp1 taller 2\tl2-tp1-2023-franciscojvicente\bin\Debug\net7.0\tl2-tp1-2023-franciscojvicente.exe
+C:\Users\franv\tp1 taller 2\tl2-tp1-2023-franciscojvicente\bin\Debug\net7.0\tl2-tp1-2023-franciscojvicente.deps.json
+C:\Users\franv\tp1 taller 2\tl2-tp1-2023-franciscojvicente\bin\Debug\net7.0\tl2-tp1-2023-franciscojvicente.runtimeconfig.json
+C:\Users\franv\tp1 taller 2\tl2-tp1-2023-franciscojvicente\bin\Debug\net7.0\tl2-tp1-2023-franciscojvicente.dll
+C:\Users\franv\tp1 taller 2\tl2-tp1-2023-franciscojvicente\bin\Debug\net7.0\tl2-tp1-2023-franciscojvicente.pdb
+C:\Users\franv\tp1 taller 2\tl2-tp1-2023-franciscojvicente\obj\Debug\net7.0\tl2-tp1-2023-franciscojvicente.csproj.AssemblyReference.cache
+C:\Users\franv\tp1 taller 2\tl2-tp1-2023-franciscojvicente\obj\Debug\net7.0\tl2-tp1-2023-franciscojvicente.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\franv\tp1 taller 2\tl2-tp1-2023-franciscojvicente\obj\Debug\net7.0\tl2-tp1-2023-franciscojvicente.AssemblyInfoInputs.cache
+C:\Users\franv\tp1 taller 2\tl2-tp1-2023-franciscojvicente\obj\Debug\net7.0\tl2-tp1-2023-franciscojvicente.AssemblyInfo.cs
+C:\Users\franv\tp1 taller 2\tl2-tp1-2023-franciscojvicente\obj\Debug\net7.0\tl2-tp1-2023-franciscojvicente.csproj.CoreCompileInputs.cache
+C:\Users\franv\tp1 taller 2\tl2-tp1-2023-franciscojvicente\obj\Debug\net7.0\tl2-tp1-2023-franciscojvicente.dll
+C:\Users\franv\tp1 taller 2\tl2-tp1-2023-franciscojvicente\obj\Debug\net7.0\refint\tl2-tp1-2023-franciscojvicente.dll
+C:\Users\franv\tp1 taller 2\tl2-tp1-2023-franciscojvicente\obj\Debug\net7.0\tl2-tp1-2023-franciscojvicente.pdb
+C:\Users\franv\tp1 taller 2\tl2-tp1-2023-franciscojvicente\obj\Debug\net7.0\tl2-tp1-2023-franciscojvicente.genruntimeconfig.cache
+C:\Users\franv\tp1 taller 2\tl2-tp1-2023-franciscojvicente\obj\Debug\net7.0\ref\tl2-tp1-2023-franciscojvicente.dll
