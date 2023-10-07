@@ -5,9 +5,26 @@ namespace PedidosYa // Note: actual namespace depends on the project name.
 {
     internal class Program
     {
+        const string ArchivoCadeteria = "cadeteria";
+        const string ArchivoCadetes = "listaCadetes"; 
         static void Main(string[] args)
         {
-            var repositorio = new Repositorio("cadeteria.csv", "listaCadetes.csv");
+            var archivoElegido = 0;
+            
+            while (archivoElegido <= 0 || archivoElegido > 2)
+            {
+                Console.WriteLine($"Qué extensión de archivo desea usar? 1. CSV 2. JSON");
+                archivoElegido = int.TryParse(Console.ReadLine(), out var valor) ? valor : 0;  
+            }
+
+            AccesoADatos repositorio;
+            
+            if (archivoElegido == 1) {
+                repositorio = new AccesoCSV(ArchivoCadeteria, ArchivoCadetes);
+            } else {
+                repositorio = new AccesoJSON(ArchivoCadeteria, ArchivoCadetes);
+            }
+
 
             var respuesta = "s";
 
@@ -18,7 +35,7 @@ namespace PedidosYa // Note: actual namespace depends on the project name.
             Console.WriteLine("b. Asignar pedido a cadete");
             Console.WriteLine("c. Cambiar estado de un pedido");
             Console.WriteLine("d. Reasignar pedido a un cadete");
-            Console.WriteLine("e. Mostrar informe");
+            Console.WriteLine("e. Mostrar jornal por cadete");
             
             
 
@@ -27,23 +44,19 @@ namespace PedidosYa // Note: actual namespace depends on the project name.
             switch (respuesta)
             {
                 case "a":
-                    var pedido = CargarPedido();
-                    repositorio.GuardarPedido(pedido);
+                    CargarPedido(repositorio.Cadeteria);
                     break;
-
                 case "b":
-                    var cadetePedido = AsignarPedidoCadete(repositorio.Cadeteria, repositorio.Pedido);
-                    repositorio.GuardarCadete(cadetePedido);
+                    AsignarPedidoCadete(repositorio.Cadeteria);
                     break;
                 case "c":
-                    CambiarEstado(repositorio.Pedido);
+                    CambiarEstado(repositorio.Cadeteria);
                     break;
                 case "d":
-                    var cadeteReasignado = ReasignarPedido(repositorio.Cadeteria, repositorio.Pedido, repositorio.CadeteSeleccionado);
-                    repositorio.GuardarCadete(cadeteReasignado);
+                    ReasignarPedidoCadete(repositorio.Cadeteria);
                     break;
                 case "e":
-                    MostrarInforme(repositorio.Cadeteria);
+                    MostrarJornalPorCadete(repositorio.Cadeteria);
                     break;
                 default:
                     Console.WriteLine($"Esa opcion no es valida");
@@ -57,46 +70,27 @@ namespace PedidosYa // Note: actual namespace depends on the project name.
             
             
         }
-
-        private static void MostrarInforme(Cadeteria? cadeteria)
+        private static void CambiarEstado(Cadeteria? cadeteria)
         {
-            if(cadeteria == null) {
+            if (cadeteria == null)
+            {
                 Console.WriteLine($"La cadeteria no puede ser null");
                 return;
             }
-            foreach (var cadete in cadeteria.ListadoCadetes)
+            var indice = 1;
+            foreach (var pedido in cadeteria.ListadoPedidos)
             {
-                Console.WriteLine($"Nombre Cadete: {cadete.Nombre}");
-                Console.WriteLine($"Cantidad de pedidos: {cadete.PedidosEntregados()}");
-                Console.WriteLine($"Total Recaudado: {cadete.TotalGanado()}");
+                Console.WriteLine($"{indice}-{pedido.NumeroPedido}-{pedido.ObservacionPedido}");
+                indice++;
             }
-            Console.WriteLine($"El promedio de envios por cadete es: {cadeteria.CantidadEnviosPromedio()}");
-            
-        }
-
-        private static Cadete? ReasignarPedido(Cadeteria? cadeteria, Pedido? pedido, Cadete? cadeteSeleccionado)
-        {
-            if (pedido == null)
+            var seleccion = 0;
+            var totalPedidos = cadeteria.ListadoPedidos.Count();
+            while (seleccion <= 0 || seleccion > totalPedidos)
             {
-                Console.WriteLine($"El pedido no puede ser null");
-                return null;
+                Console.WriteLine($"Seleccione un pedido para cambiar su estado");
+                seleccion = int.TryParse(Console.ReadLine(), out var valor) ? valor : 0;
             }
-            if (cadeteSeleccionado == null) {
-                Console.WriteLine($"El cadete no puede ser null");
-                return null;
-            }
-            cadeteSeleccionado.AbandonarPedido(pedido);
-            return AsignarPedidoCadete(cadeteria , pedido);
-        }
-
-        private static void CambiarEstado(Pedido? pedido)
-        {
-            // TODO:completar msj del pedido null
-            if (pedido == null)
-            {
-                Console.WriteLine($"El pedido no puede ser null");
-                return;
-            }
+            var pedidoSeleccionado =  cadeteria.ListadoPedidos[seleccion - 1];
             var respuesta = 0;
             while (respuesta <= 0 || respuesta > 2 )
             {
@@ -105,11 +99,15 @@ namespace PedidosYa // Note: actual namespace depends on the project name.
             Console.WriteLine($"2. Entregado");
             respuesta = int.TryParse(Console.ReadLine(), out var valor) ? valor : 0;
             }
-            if(respuesta == 1) pedido.Rechazar();
-            else pedido.Entregar();
+            if(respuesta == 1) pedidoSeleccionado.Rechazar();
+            else pedidoSeleccionado.Entregar();
         }
 
-        private static Pedido CargarPedido() {
+        private static void CargarPedido(Cadeteria? cadeteria) {
+            if(cadeteria == null) {
+                Console.WriteLine($"La cadeteria no puede ser null");
+                return;
+            }
             Console.WriteLine("Generar pedido:");
             Console.WriteLine("Ingrese observacion sobre su pedido");
             var observacion = Console.ReadLine();
@@ -122,37 +120,114 @@ namespace PedidosYa // Note: actual namespace depends on the project name.
             Console.WriteLine($"Datos de referencia de su direccion");
             var datosReferenciaDireccion = Console.ReadLine();
             var pedido = new Pedido(observacion, nombre, direccion, telefono, datosReferenciaDireccion);
-            return pedido;
+            // chequear
+            cadeteria.AgregarPedido(pedido);
         }
-        private static Cadete? AsignarPedidoCadete(Cadeteria? cadeteria, Pedido? pedido) {
-            if (pedido == null)
-            {
-                Console.WriteLine($"El pedido no puede ser null");
-                return null;
-            }
+
+        private static void AsignarPedidoCadete(Cadeteria? cadeteria) {
             if(cadeteria == null) {
                 Console.WriteLine($"La cadeteria no puede ser null");
-                return null;
+                return;
             }
+            var pedido = ListarPedidosPendientes(cadeteria);
+            var cadete = ListarCadetes(cadeteria.ListadoCadetes);
+            cadeteria.AsignarCadeteAPedido(cadete.Id, pedido.NumeroPedido);
+        }
+    
+        private static Pedido ListarPedidosPendientes(Cadeteria cadeteria) {
+            var pedidosPendientes = cadeteria.PedidosPendientes().ToList();
             var indice = 1;
-            foreach (var cadete in cadeteria.ListadoCadetes)
+            foreach (var pedido in pedidosPendientes)
+            {
+                Console.WriteLine($"{indice}-{pedido.NumeroPedido}");
+                indice++;
+            }
+            var seleccion = 0;
+            var total = pedidosPendientes.Count();
+            while (seleccion <= 0 || seleccion > total) {
+                Console.WriteLine($"Seleccione uno de los siguientes pedidos");
+                seleccion = int.TryParse(Console.ReadLine(), out var valor) ? valor : 0;
+            }
+            var pedidoSeleccionado =  pedidosPendientes[seleccion - 1];
+            return pedidoSeleccionado;
+        }
+        
+        
+        private static Cadete ListarCadetes(List<Cadete> listaCadetes) {
+            var indice = 1;
+            foreach (var cadete in listaCadetes)
             {
                 Console.WriteLine($"{indice}-{cadete.Nombre}");
                 indice++;
             }
             var seleccion = 0;
-            var total = cadeteria.ListadoCadetes.Count;
+            var total = listaCadetes.Count;
             while (seleccion <= 0 || seleccion > total )
             {
             Console.WriteLine($"Que cadete desea asignar al pedido?");
             seleccion = int.TryParse(Console.ReadLine(), out var valor) ? valor : 0;
             }
-            var cadetePedido = cadeteria.ListadoCadetes[seleccion-1];
-            cadetePedido.TomarPedido(pedido);
+            var cadetePedido = listaCadetes[seleccion - 1];
             return cadetePedido;
+        }
+        private static void ReasignarPedidoCadete(Cadeteria? cadeteria) {
+            // listar pedidos asignados
+            if(cadeteria == null) {
+                Console.WriteLine($"La cadeteria no puede ser null");
+                return;
+            }
+            var pedidosAsignados = cadeteria.PedidosAsignados().ToList();
+            // elegir pedido
+            var indice = 1;
+            foreach (var pedido in pedidosAsignados)
+            {
+                Console.WriteLine($"{indice}-{pedido.NumeroPedido}");
+                indice++;
+            }
+            var seleccion = 0;
+            var total = pedidosAsignados.Count();
+            while (seleccion <= 0 || seleccion > total) {
+                Console.WriteLine($"Seleccione uno de los siguientes pedidos");
+                seleccion = int.TryParse(Console.ReadLine(), out var valor) ? valor : 0;
+            }
+            var pedidoSeleccionado =  pedidosAsignados[seleccion - 1];
+            // listar cadetes - cadete que estaba. con un where que cadete != que cadete tenia el id
+            if (pedidoSeleccionado.Cadete == null) return;
+            var listaSinCadeteAsignado = cadeteria.ListadoCadetes.Where(c => c.Id != pedidoSeleccionado.Cadete.Id);
+            
+            // listar cadetes para elegir
+            var cadeteSeleccionado = ListarCadetes(listaSinCadeteAsignado.ToList());
+            cadeteria.AsignarCadeteAPedido(cadeteSeleccionado.Id, pedidoSeleccionado.NumeroPedido);
+        }
+
+        private static void MostrarJornalPorCadete(Cadeteria? cadeteria) {
+            if(cadeteria == null) {
+                Console.WriteLine($"La cadeteria no puede ser null");
+                return;
+            }
+            var cadete = ListarCadetes(cadeteria.ListadoCadetes);
+            var totalACobrar = cadeteria.JornalACobrar(cadete.Id);
+            Console.WriteLine($"El cadete {cadete.Id}-{cadete.Nombre} debe cobrar ${totalACobrar}");
         }
     }
 }
+
+// private static void MostrarInforme(Cadeteria? cadeteria)
+        // {
+        //     if(cadeteria == null) {
+        //         Console.WriteLine($"La cadeteria no puede ser null");
+        //         return;
+        //     }
+        //     foreach (var cadete in cadeteria.ListadoCadetes)
+        //     {
+        //         Console.WriteLine($"Nombre Cadete: {cadete.Nombre}");
+        //         Console.WriteLine($"Cantidad de pedidos: {cadete.PedidosEntregados()}");
+        //         Console.WriteLine($"Total Recaudado: {cadete.TotalGanado()}");
+        //     }
+        //     Console.WriteLine($"El promedio de envios por cadete es: {cadeteria.CantidadEnviosPromedio()}");
+            
+        // }
+
 
 // delegado es una referencia a un metodo . representa un metodo, se lo puede usar para asignar o referenciar un metodo. 
 // sintaxis de definición. palabra delegate, defino un tipo

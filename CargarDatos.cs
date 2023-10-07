@@ -1,7 +1,0 @@
-namespace PedidosYa
-{
-    class CargarDatos
-    {
-        
-    }
-}

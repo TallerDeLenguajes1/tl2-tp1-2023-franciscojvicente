@@ -1,0 +1,52 @@
+[
+    {
+        "Nombre": "francisco",
+        "Direccion": "pje neuquen 993",
+        "Telefono": "4201241"
+    },
+    {
+        "Nombre": "jose",
+        "Direccion": "rondeau 167",
+        "Telefono": "4246220"
+    },
+    {
+        "Nombre": "vicente",
+        "Direccion": "heras 355",
+        "Telefono": "3176976"
+    },
+    {
+        "Nombre": "maria",
+        "Direccion": "san martin 789",
+        "Telefono": "3123456"
+    },
+    {
+        "Nombre": "carlos",
+        "Direccion": "belgrano 234",
+        "Telefono": "4112233"
+    },
+    {
+        "Nombre": "ana",
+        "Direccion": "sarmiento 456",
+        "Telefono": "4229988"
+    },
+    {
+        "Nombre": "juan",
+        "Direccion": "roca 123",
+        "Telefono": "3867445"
+    },
+    {
+        "Nombre": "lucia",
+        "Direccion": "mitre 678",
+        "Telefono": "4133678"
+    },
+    {
+        "Nombre": "pedro",
+        "Direccion": "rivadavia 987",
+        "Telefono": "3987654"
+    },
+    {
+        "Nombre": "laura",
+        "Direccion": "belgrano 567",
+        "Telefono": "4356789"
+    }
+]
