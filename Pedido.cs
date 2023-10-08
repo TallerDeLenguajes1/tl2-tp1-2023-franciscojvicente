@@ -24,14 +24,6 @@ namespace PedidosYa
             estadosPedido = EstadosPedidos.Pendiente;
         }
 
-        // public (string, string? Direccion, string? DatosReferenciaDireccion) VerDireccionCliente() {
-        //     return ("La direccion es {0} y sus referencias son {1}", cliente.Direccion, cliente.DatosReferenciaDireccion);
-        // }
-        // public (string, string? Nombre, int Telefono) VerDatosCliente() {
-        //     return ("Nombre cliente: {0}\nTelefono Cliente: {1}", cliente.Nombre, cliente.Telefono);
-        // }
-
-
         public void CambiarEstado()
         {
             int siguienteValor = ((int)EstadosPedido + 1) % Enum.GetValues(typeof(EstadosPedidos)).Length;

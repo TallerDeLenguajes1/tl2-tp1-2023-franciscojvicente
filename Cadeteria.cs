@@ -9,7 +9,6 @@ namespace PedidosYa {
         private List<Cadete> listadoCadetes = new();
         private List<Pedido> listadoPedidos = new();
 
-        
         public List<Cadete> ListadoCadetes { get => listadoCadetes;}
         internal List<Pedido> ListadoPedidos { get => listadoPedidos;}
         public string? Nombre { get => nombre;  }
@@ -38,8 +37,6 @@ namespace PedidosYa {
             listadoPedidos.Add(pedido);
         }
 
-        // solo
-
         public int PedidosEntregados() {
             return listadoPedidos.Count(p => p.EstadosPedido == EstadosPedidos.Entregado);
         }
@@ -61,17 +58,6 @@ namespace PedidosYa {
         }
         public IEnumerable<Pedido> PedidosAsignados() {
             return listadoPedidos.Where(p => p.EstadosPedido == EstadosPedidos.Asignado);
-        }
-        
-
-        // public decimal CantidadEnviosPromedio() {
-        //     var suma = ListadoCadetes.Sum(c => c.PedidosEntregados());
-        //     return listadoCadetes.Any() ? 
-        //     suma/(decimal)listadoCadetes.Count : 
-        //     0;
-        // }
-    //      AsignarPedido();
-    //      AgregarCadete();
-    //      EliminarCadete();
-    }
+        }        
+   }
 }

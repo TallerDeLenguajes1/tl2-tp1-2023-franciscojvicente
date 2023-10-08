@@ -22,8 +22,7 @@ namespace PedidosYa
             while ((linea = sr.ReadLine()) != null)
             {
                 var datos = linea.Split(',');
-                var cadete = new Cadete(datos[0], datos[1], datos[2]);
-                cadeteria?.AgregarCadete(cadete);
+                cadeteria?.AgregarCadete(datos[0], datos[1], datos[2]);
             }
         }
     }

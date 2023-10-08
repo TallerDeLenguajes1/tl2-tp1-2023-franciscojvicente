@@ -1,7 +1,7 @@
-﻿using PedidosYa;
+﻿﻿using PedidosYa;
 using System;
 
-namespace PedidosYa // Note: actual namespace depends on the project name.
+namespace PedidosYa
 {
     internal class Program
     {
@@ -11,36 +11,24 @@ namespace PedidosYa // Note: actual namespace depends on the project name.
         {
             var archivoElegido = 0;
             
-            while (archivoElegido <= 0 || archivoElegido > 2)
-            {
+            while (archivoElegido <= 0 || archivoElegido > 2) {
                 Console.WriteLine($"Qué extensión de archivo desea usar? 1. CSV 2. JSON");
                 archivoElegido = int.TryParse(Console.ReadLine(), out var valor) ? valor : 0;  
             }
-
             AccesoADatos repositorio;
-            
             if (archivoElegido == 1) {
                 repositorio = new AccesoCSV(ArchivoCadeteria, ArchivoCadetes);
             } else {
                 repositorio = new AccesoJSON(ArchivoCadeteria, ArchivoCadetes);
             }
-
-
             var respuesta = "s";
-
-            while (respuesta != "n")
-            {
-
+            while (respuesta != "n") {
             Console.WriteLine("a. Dar de alta un pedido");
             Console.WriteLine("b. Asignar pedido a cadete");
             Console.WriteLine("c. Cambiar estado de un pedido");
             Console.WriteLine("d. Reasignar pedido a un cadete");
             Console.WriteLine("e. Mostrar jornal por cadete");
-            
-            
-
             respuesta = Console.ReadLine();
-
             switch (respuesta)
             {
                 case "a":
@@ -66,9 +54,6 @@ namespace PedidosYa // Note: actual namespace depends on the project name.
             respuesta = Console.ReadLine();
             Console.Clear();
             }
-            
-            
-            
         }
         private static void CambiarEstado(Cadeteria? cadeteria)
         {
@@ -119,8 +104,6 @@ namespace PedidosYa // Note: actual namespace depends on the project name.
             var telefono = Console.ReadLine();
             Console.WriteLine($"Datos de referencia de su direccion");
             var datosReferenciaDireccion = Console.ReadLine();
-            // var pedido = new Pedido(observacion, nombre, direccion, telefono, datosReferenciaDireccion);
-            // chequear
             cadeteria.AgregarPedido(observacion, nombre, direccion, telefono, datosReferenciaDireccion);
         }
 
@@ -151,7 +134,6 @@ namespace PedidosYa // Note: actual namespace depends on the project name.
             var pedidoSeleccionado =  pedidosPendientes[seleccion - 1];
             return pedidoSeleccionado;
         }
-        
         
         private static Cadete ListarCadetes(List<Cadete> listaCadetes) {
             var indice = 1;
@@ -211,62 +193,3 @@ namespace PedidosYa // Note: actual namespace depends on the project name.
         }
     }
 }
-
-// private static void MostrarInforme(Cadeteria? cadeteria)
-        // {
-        //     if(cadeteria == null) {
-        //         Console.WriteLine($"La cadeteria no puede ser null");
-        //         return;
-        //     }
-        //     foreach (var cadete in cadeteria.ListadoCadetes)
-        //     {
-        //         Console.WriteLine($"Nombre Cadete: {cadete.Nombre}");
-        //         Console.WriteLine($"Cantidad de pedidos: {cadete.PedidosEntregados()}");
-        //         Console.WriteLine($"Total Recaudado: {cadete.TotalGanado()}");
-        //     }
-        //     Console.WriteLine($"El promedio de envios por cadete es: {cadeteria.CantidadEnviosPromedio()}");
-            
-        // }
-
-
-// delegado es una referencia a un metodo . representa un metodo, se lo puede usar para asignar o referenciar un metodo. 
-// sintaxis de definición. palabra delegate, defino un tipo
-// es un tipo de dato, lo que defino es la estructura de un metodo, firma o signature. la firma o signature del metodo es el tipo de retorno, nombre y parámetro
-// cuando defino un delegado tengo que definie la firma de un metodo. lo mas importante es el tipo de retorno y los parametros
-
-// delegados ya creados. action es un delegado que representa un metodo que no devuelve nada y no recibe ningun parametro
-
-// varias declaraciones de action. action o action<> -> action<int, int>
-
-// otra declaracion para cuando retorna Func. Func<int> => metodo que no recibe param pero devuelve entero
-// Func <string, int> recibe string, devuelvo un entero. al ultimo va el tipo de retorno
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// var pedido1 = new Pedidos(EstadosPedidos.Pendiente, 111111, "No le gusta la cebolla al Sr.");
-
-// pedido1.CambiarEstado();
-// pedido1.CambiarEstado();
-// pedido1.CambiarEstado();
-// pedido1.CambiarEstado();
-// pedido1.CambiarEstado();
-// pedido1.CambiarEstado();
-
-
-// System.Console.WriteLine("Fin del programa");
