@@ -119,9 +119,9 @@ namespace PedidosYa // Note: actual namespace depends on the project name.
             var telefono = Console.ReadLine();
             Console.WriteLine($"Datos de referencia de su direccion");
             var datosReferenciaDireccion = Console.ReadLine();
-            var pedido = new Pedido(observacion, nombre, direccion, telefono, datosReferenciaDireccion);
+            // var pedido = new Pedido(observacion, nombre, direccion, telefono, datosReferenciaDireccion);
             // chequear
-            cadeteria.AgregarPedido(pedido);
+            cadeteria.AgregarPedido(observacion, nombre, direccion, telefono, datosReferenciaDireccion);
         }
 
         private static void AsignarPedidoCadete(Cadeteria? cadeteria) {

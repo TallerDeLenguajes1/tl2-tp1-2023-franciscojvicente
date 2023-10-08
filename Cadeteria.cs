@@ -1,10 +1,11 @@
 using System.IO.Pipes;
+using System.Security.Cryptography.X509Certificates;
 
 namespace PedidosYa {
     class Cadeteria
     {
         private string? nombre;
-        private string telefono;
+        private string? telefono;
         private List<Cadete> listadoCadetes = new();
         private List<Pedido> listadoPedidos = new();
 
@@ -12,7 +13,7 @@ namespace PedidosYa {
         public List<Cadete> ListadoCadetes { get => listadoCadetes;}
         internal List<Pedido> ListadoPedidos { get => listadoPedidos;}
         public string? Nombre { get => nombre;  }
-        public string Telefono { get => telefono; }
+        public string? Telefono { get => telefono; }
 
         public Cadeteria(){
 
@@ -23,15 +24,17 @@ namespace PedidosYa {
         }
 
 
-        public void AgregarCadete(Cadete cadete) {
+        public void AgregarCadete(string? nombre, string? direccion, string? telefono) {
+            if(nombre == null || direccion == null || telefono == null) return;
+            var cadete = new Cadete(nombre, direccion, telefono);
             listadoCadetes.Add(cadete);
         }
-        public void AgregarCadetes(List<Cadete>? cadetes) {
-            if (cadetes == null) return;
-            listadoCadetes = cadetes;
-        }
+        
 
-        public void AgregarPedido(Pedido pedido) {
+        public void AgregarPedido(string? observacion, string? nombre, string? direccion, string? telefono, string? datosReferenciaDireccion) {
+            // listadoPedidos.Add(pedido);
+            if(observacion == null || nombre == null || direccion == null || telefono == null || datosReferenciaDireccion == null ) return;
+            var pedido = new Pedido(observacion, nombre, direccion, telefono, datosReferenciaDireccion);
             listadoPedidos.Add(pedido);
         }
 

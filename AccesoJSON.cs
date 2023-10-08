@@ -20,7 +20,10 @@ namespace PedidosYa
             var listaCadetes = new List<Cadete>();
             using var sr = new StreamReader(archivoCadetes);
             listaCadetes = JsonSerializer.Deserialize<List<Cadete>>(sr.ReadToEnd());
-            cadeteria.AgregarCadetes(listaCadetes);
+            foreach (var cadete in listaCadetes)
+            {
+                cadeteria.AgregarCadete(cadete.Nombre, cadete.Direccion, cadete.Telefono);
+            }
         }
     }
 }
